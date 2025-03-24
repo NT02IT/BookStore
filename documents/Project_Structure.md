@@ -39,6 +39,7 @@ Project được thực hiện theo kiến trúc Microservices, được chia l�
         /storages       # Lưu trữ các dữ liệu lớn như file, ảnh, video,...
         /migrations     # Chứa các .sql update cơ sở dữ liệu
         /procedures     # Chứa các stored procedures
+        /crawl-data     # Chứa code crawl dữ liệu từ nhiều nguồn khác nhau
         /create-database.sql        # Khởi tạo database
         /insert-defaultdata.sql     # Khởi tạo các data default của hệ thống
     /documents          # Chứa các document, hướng dẫn cần thiết 

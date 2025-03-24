@@ -10,7 +10,7 @@ class BookInfoController {
     }
 
     public function getAllBookInfo() {
-        $query = "CALL GetAllBookInfo()";
+        $query = "CALL sp_GetAllRole()";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         $allBookInfo = $stmt->fetchAll(PDO::FETCH_ASSOC);

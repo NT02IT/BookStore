@@ -1,0 +1,20 @@
+{
+  "name": "frontend-enduser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "sass src/scss:public/css",
+    "sass:dev": "sass --watch --embed-source-map src/scss:public/css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "sass": "^1.85.1"
+  },
+  "dependencies": {
+    "frontend-enduser": "file:"
+  }
+}

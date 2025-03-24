@@ -1,0 +1,204 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0px;
+}
+
+html, body, ul, ol, li, figure, blockquote, dl, dd {
+  margin: 0;
+  padding: 0;
+}
+
+/* color variable*/
+/* typography variable */
+/* typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(Inter, sans-serif);
+  font-style: normal;
+}
+
+h1 {
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 36px;
+    line-height: 44px;
+    font-weight: 700;
+  }
+}
+h2 {
+  font-size: 36px;
+  line-height: 44px;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  h2 {
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: 700;
+  }
+}
+h3 {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  h3 {
+    font-size: 28px;
+    line-height: 36px;
+    font-weight: 700;
+  }
+}
+h4 {
+  font-size: 28px;
+  line-height: 36px;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  h4 {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 600;
+  }
+}
+h5 {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  h5 {
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 600;
+  }
+}
+h6 {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  h6 {
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 600;
+  }
+}
+.body {
+  font-family: var(Inter, sans-serif);
+  font-style: normal;
+}
+
+.body-l {
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.body-l-semibold {
+  font-weight: 600;
+}
+
+.body-l-medium {
+  font-weight: 500;
+}
+
+.body-l-regular {
+  font-weight: 400;
+}
+
+.body-m {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.body-m-semibold {
+  font-weight: 600;
+}
+
+.body-m-medium {
+  font-weight: 500;
+}
+
+.body-m-regular {
+  font-weight: 400;
+}
+
+.body-s {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.body-s-semibold {
+  font-weight: 600;
+}
+
+.body-s-medium {
+  font-weight: 500;
+}
+
+.body-s-regular {
+  font-weight: 400;
+}
+
+.body-xs {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.body-xs-semibold {
+  font-weight: 600;
+}
+
+.body-xs-medium {
+  font-weight: 500;
+}
+
+.body-xs-regular {
+  font-weight: 400;
+}
+
+.indicator {
+  width: 0.5rem;
+  height: 0.5rem;
+  flex-shrink: 0;
+  border-radius: 0.25rem;
+  border: 1.5px solid rgb(255, 255, 255);
+  background: rgb(212, 212, 216);
+}
+.indicator.active {
+  background: rgb(52, 121, 233);
+}
+
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22../../src/scss/_theme.scss%22,%22../../src/scss/_reset.scss%22,%22../../src/scss/components/_avatar.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAAQ;ACAR;AAAA;AAAA;EAGE;;;AAGF;EACE;;;AAGF;EACE;;;AAGF;EACE;EACA;;;ADdF;AAsDA;AAoCA;AACA;EACI;EACA;;;AAGJ;EACI,WAxCoB;EAyCpB,aAzBqB;EA0BrB;;;AAEA;EALJ;IAMQ,WAvCe;IAwCf,aAxBgB;IAyBhB;;;AAIR;EACI,WAnDoB;EAoDpB,aApCqB;EAqCrB;;;AAEA;EALJ;IAMQ,WAlDe;IAmDf,aAnCgB;IAoChB;;;AAIR;EACI,WA9DoB;EA+DpB,aA/CqB;EAgDrB;;;AAEA;EALJ;IAMQ,WA7De;IA8Df,aA9CgB;IA+ChB;;;AAIR;EACI,WAzEoB;EA0EpB,aA1DqB;EA2DrB;;;AAEA;EALJ;IAMQ,WAxEe;IAyEf,aAzDgB;IA0DhB;;;AAIR;EACI,WApFoB;EAqFpB,aArEqB;EAsErB;;;AAEA;EALJ;IAMQ,WAnFe;IAoFf,aApEgB;IAqEhB;;;AAIR;EACI,WA/FoB;EAgGpB,aAhFqB;EAiFrB;;;AAEA;EALJ;IAMQ,WA9Fe;IA+Ff,aA/EgB;IAgFhB;;;AAIR;EACI;EACA;;;AAEA;EACI,WAxGY;EAyGZ,aAzFa;;;AA2Fb;EACI;;;AAGJ;EACI;;;AAGJ;EACI;;;AAIR;EACI,WAxHY;EAyHZ,aAzGa;;;AA2Gb;EACI;;;AAGJ;EACI;;;AAGJ;EACI;;;AAIR;EACI,WAxIY;EAyIZ,aAzHa;;;AA2Hb;EACI;;;AAGJ;EACI;;;AAGJ;EACI;;;AAIR;EACI,WAxJa;EAyJb,aAzIc;;;AA2Id;EACI;;;AAGJ;EACI;;;AAGJ;EACI;;;AE3OZ;EACI;EACA;EACA;EACA;EACA;EACA,YFHU;;AEKV;EACI,YFKM;;;AEDd;EACI;EACA;EACA;EACA;;AAEA;EACI;EACA;EACA%22,%22file%22:%22main.css%22%7D */

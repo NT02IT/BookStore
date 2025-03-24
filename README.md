@@ -141,6 +141,9 @@
 ## Các tài liệu liên quan
 
 UI Design: https://www.figma.com/design/5EAfNhhGd52btSnkwFDIb3/BookStore-UID?node-id=0-1&p=f&t=i4pA1HcC3HdVeuTd-0
+
 Google Drive: https://drive.google.com/drive/u/0/folders/1T9wW310YdWth2FPaMTlH5AKy9FxJxmZs
+
 ERD: https://app.diagrams.net/#G1c_YzuMURALfCf-rHXdgAC1plLlyk_-ps
+
 Technical Requirements: https://docs.google.com/spreadsheets/d/1jNAJynDGe1vUjzTAobyjemC_rnRcuqLkgO9jzcfv2ks/edit?gid=0#gid=0

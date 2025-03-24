@@ -13,5 +13,8 @@
   "license": "ISC",
   "devDependencies": {
     "sass": "^1.85.1"
+  },
+  "dependencies": {
+    "frontend-admin": "file:"
   }
 }

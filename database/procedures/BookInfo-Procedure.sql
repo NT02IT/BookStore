@@ -1,6 +1,0 @@
-DELIMITER //
-CREATE PROCEDURE GetAllBookInfo()
-BEGIN
-    SELECT * FROM bookinfo;
-END //
-DELIMITER ;
