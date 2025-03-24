@@ -1,28 +1,89 @@
 /** Component: Avatar */
 @use '../_theme' as theme;
 
-.indicator{
-    width: 0.5rem;
-    height: 0.5rem;
-    flex-shrink: 0;
-    border-radius: 0.25rem;
-    border: 1.5px solid theme.$common-white;
-    background: theme.$neutral-300;
-
-    &.active{
-        background: theme.$primary-500;
-    }
-}
-
 .avatar{
-    display: flex;
+    position: relative;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
+    cursor: pointer;
+    &:hover{
+        opacity: 0.8;
+    }
 
     img{
         width: 100%;
         height: 100%;
         object-fit: cover;
+        border-radius: 100%;
+    }
+
+    .indicator{
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        flex-shrink: 0;
+        border-radius: 100%;
+        background: theme.$neutral-300;
+    
+        &.active{
+            background: theme.$primary-500;
+        }
+    }
+
+    &.xs{
+        width: 1.5rem;
+        height: 1.5rem;
+
+        .indicator{
+            width: 0.375rem;
+            height: 0.375rem;
+            border: 1.5px solid theme.$common-white;
+        }
+    }
+
+    &.s{
+        width: 2rem;
+        height: 2rem;
+
+        .indicator{
+            width: 0.5rem;
+            height: 0.5rem;
+            border: 1.5px solid theme.$common-white;
+        }
+    }
+
+    &.m{
+        width: 2.5rem;
+        height: 2.5rem;
+
+        .indicator{
+            width: 0.625rem;
+            height: 0.625rem;
+            border: 1.5px solid theme.$common-white;
+        }
+    }
+
+    &.l{
+        width: 3rem;
+        height: 3rem;
+
+        .indicator{
+            width: 0.75rem;
+            height: 0.75rem;
+            border: 1.5px solid theme.$common-white;
+        }
+    }
+
+    &.xl{
+        width: 5rem;
+        height: 5rem;
+
+        .indicator{
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 3px solid theme.$common-white;
+        }
     }
 }

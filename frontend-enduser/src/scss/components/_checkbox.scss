@@ -1,0 +1,49 @@
+/** Component: Checkbox */
+@use '../_theme' as theme;
+
+.checkbox-item{
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+
+    color: theme.$neutral-900;
+    font-family: theme.$typeface-body;
+    font-size: theme.$font-sizes-body-s;
+    font-style: normal;
+    font-weight: 400;
+    line-height: theme.$line-height-body-s; 
+
+    i{
+        width: 1.5rem;
+        height: 1.5rem;
+        font-size: 1.5rem;
+        &.icon-check::before{
+            color: theme.$primary-500;   
+        }
+        &.icon-uncheck::before{
+            color: theme.$neutral-400;        
+        }
+    }
+
+    input{
+        display: none;
+        &:checked {
+            &~ i.icon-check{
+                display: block;
+            }
+            &~ i.icon-uncheck{
+                display: none;
+            }
+        }
+        &:not(:checked) {
+            &~ i.icon-check{
+                display: none;
+            }
+            &~ i.icon-uncheck{
+                display: block;
+            }
+        }
+    }
+}

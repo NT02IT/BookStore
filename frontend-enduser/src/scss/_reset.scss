@@ -16,3 +16,16 @@ html, body, ul, ol, li, figure, blockquote, dl, dd {
   margin: 0;
   padding: 0;
 }
+
+a, button{
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+  box-shadow: none;
+  border: none;
+}
+
+input{
+  margin: 0;
+  padding: 0;
+}

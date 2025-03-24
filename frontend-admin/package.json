@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "sass src/scss:public/css",
-    "sass:dev": "sass --watch --embed-source-map src/scss:public/css"
+    "sass:dev": "sass --watch --embed-source-map src/scss:public/css",
+    "auto-reload": "browser-sync start --proxy \"localhost/BookStore/frontend-admin/\" --files \"**/*.php, **/*.css, **/*.js\""
   },
   "keywords": [],
   "author": "",
