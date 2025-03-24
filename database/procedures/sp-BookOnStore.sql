@@ -24,16 +24,36 @@ BEGIN
     WHERE bookOnStoreID = p_bookOnStoreID;
 END //
 
-CREATE PROCEDURE sp_DeleteBookOnStore(
-    IN p_bookOnStoreID INT
-)
-BEGIN
-    DELETE FROM BookOnStore WHERE bookOnStoreID = p_bookOnStoreID;
-END //
-
 CREATE PROCEDURE sp_GetAllBookOnStore()
 BEGIN
     SELECT * FROM BookOnStore;
+END //
+
+-- Lấy thông tin sách trên cửa hàng theo ID
+CREATE PROCEDURE sp_GetBookOnStoreByID(
+    IN p_bookOnStoreID INT
+)
+BEGIN
+    SELECT * FROM BookOnStore WHERE bookOnStoreID = p_bookOnStoreID;
+END //
+
+-- Lấy thông tin sách trên cửa hàng theo ISBN
+CREATE PROCEDURE sp_GetBookOnStoreByISBN(
+    IN p_ISBN VARCHAR(13)
+)
+BEGIN
+    SELECT * FROM BookOnStore WHERE ISBN = p_ISBN;
+END //
+
+-- Cập nhật số lượng sách trên cửa hàng
+CREATE PROCEDURE sp_UpdateBookOnStoreQuantity(
+    IN p_bookOnStoreID INT,
+    IN p_quantity INT
+)
+BEGIN
+    UPDATE BookOnStore 
+    SET quantity = p_quantity
+    WHERE bookOnStoreID = p_bookOnStoreID;
 END //
 
 DELIMITER ;

@@ -39,4 +39,13 @@ BEGIN
     SELECT * FROM BookRating;
 END //
 
+CREATE PROCEDURE sp_GetBookRatingByID(
+    IN p_bookRatingID INT
+)
+BEGIN
+    SELECT * 
+    FROM BookRating 
+    WHERE bookRatingID = p_bookRatingID;
+END //
+
 DELIMITER ;

@@ -56,4 +56,39 @@ BEGIN
     SELECT * FROM BookInfo WHERE isDelete = FALSE;
 END //
 
+-- Khôi phục sách đã bị đánh dấu xóa
+CREATE PROCEDURE sp_RestoreBookInfo(
+    IN p_ISBN VARCHAR(13)
+)
+BEGIN
+    UPDATE BookInfo SET isDelete = FALSE WHERE ISBN = p_ISBN;
+END //
+
+-- Lấy tất cả thông tin sách, bao gồm cả sách đã bị xóa mềm
+CREATE PROCEDURE sp_GetAllBookInfoIncludingDeleted()
+BEGIN
+    SELECT * FROM BookInfo;
+END //
+
+-- Tìm kiếm sách theo ISBN
+CREATE PROCEDURE sp_GetBookInfoByISBN(
+    IN p_ISBN VARCHAR(13)
+)
+BEGIN
+    SELECT * FROM BookInfo WHERE ISBN = p_ISBN;
+END //
+
+-- Tìm kiếm sách theo từ khóa (tìm trong tiêu đề, tác giả, nhà xuất bản)
+CREATE PROCEDURE sp_SearchBooks(
+    IN p_keyword VARCHAR(255)
+)
+BEGIN
+    SELECT * 
+    FROM BookInfo
+    WHERE (bookTitle LIKE CONCAT('%', p_keyword, '%')
+        OR bookAuthor LIKE CONCAT('%', p_keyword, '%')
+        OR publisher LIKE CONCAT('%', p_keyword, '%'))
+    AND isDelete = FALSE;
+END //
+
 DELIMITER ;
