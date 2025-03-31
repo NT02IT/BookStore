@@ -72,4 +72,21 @@ BEGIN
     WHERE deliveryInfoID = p_deliveryInfoID;
 END //
 
+CREATE PROCEDURE sp_GetDeliveryInfoByUserID(
+    IN p_enduserAccountID INT
+)
+BEGIN
+    SELECT 
+        deliveryInfoID,
+        enduserAccountID,
+        prfName,
+        prfAddress,
+        phoneNumber,
+        isDelete
+    FROM DeliveryInfo
+    WHERE enduserAccountID = p_enduserAccountID
+    AND isDelete = FALSE
+    ORDER BY prfName;
+END //
+
 DELIMITER ;

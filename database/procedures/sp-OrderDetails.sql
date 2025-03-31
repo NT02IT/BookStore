@@ -3,11 +3,12 @@ DELIMITER //
 CREATE PROCEDURE sp_InsertOrderDetails(
     IN p_orderID INT,
     IN p_bookOnStoreID INT,
+    IN p_purchasePrice INT,
     IN p_quantity INT
 )
 BEGIN
-    INSERT INTO OrderDetails (orderID, bookOnStoreID, quantity)
-    VALUES (p_orderID, p_bookOnStoreID, p_quantity);
+    INSERT INTO OrderDetails (orderID, bookOnStoreID, purchasePrice, quantity)
+    VALUES (p_orderID, p_bookOnStoreID, p_purchasePrice, p_quantity);
 END //
 
 CREATE PROCEDURE sp_UpdateOrderDetails(

@@ -165,6 +165,7 @@ CREATE TABLE OrderDetails (
     orderDetailsID INT AUTO_INCREMENT PRIMARY KEY,
     orderID INT NOT NULL,
     bookOnStoreID INT NOT NULL,
+    purchasePrice INT NOT NULL,
     quantity INT NOT NULL,
     FOREIGN KEY (orderID) REFERENCES `Order`(orderID),
     FOREIGN KEY (bookOnStoreID) REFERENCES BookOnStore(bookOnStoreID)

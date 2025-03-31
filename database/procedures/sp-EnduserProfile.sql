@@ -81,4 +81,30 @@ BEGIN
     WHERE enduserProfileID = p_enduserProfileID;
 END //
 
+CREATE PROCEDURE sp_SearchEnduserProfileByName(
+    IN p_searchTerm VARCHAR(255)
+)
+BEGIN
+    SELECT * FROM EnduserProfile 
+    WHERE prfName LIKE CONCAT('%', p_searchTerm, '%')
+    AND isDelete = FALSE
+    ORDER BY prfName;
+END //
+
+CREATE PROCEDURE sp_CheckEnduserEmailExists(
+    IN p_email VARCHAR(255)
+)
+BEGIN
+    SELECT COUNT(*) FROM EnduserProfile 
+    WHERE email = p_email AND isDelete = FALSE;
+END //
+
+CREATE PROCEDURE sp_CheckEnduserPhoneExists(
+    IN p_phone VARCHAR(15)
+)
+BEGIN
+    SELECT COUNT(*) FROM EnduserProfile 
+    WHERE phoneNumber = p_phone AND isDelete = FALSE;
+END //
+
 DELIMITER ;
