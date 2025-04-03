@@ -1,91 +1,57 @@
 <?php
 class AdminAccountModel {
     private $adminAccountID;
+    private $adminProfileID;
     private $roleID;
     private $username;
-    private $pwd;
-    private $adminProfileID;
-    private $dateCreated;
-    private $isDelete;
+    private $password;
+    private $createdAt;
+    private $deletedAt;
 
-    public function __construct($adminAccountID = null, $roleID, $username, $pwd, $adminProfileID, 
-                                $dateCreated = null, $isDelete = false) {
+    public function __construct(
+        $adminAccountID,
+        $adminProfileID,
+        $roleID,
+        $username,
+        $password,
+        $createdAt,
+        $deletedAt = null
+    ) {
         $this->adminAccountID = $adminAccountID;
+        $this->adminProfileID = $adminProfileID;
         $this->roleID = $roleID;
         $this->username = $username;
-        $this->pwd = $pwd;
-        $this->adminProfileID = $adminProfileID;
-        $this->dateCreated = $dateCreated;
-        $this->isDelete = $isDelete;
+        $this->password = $password;
+        $this->createdAt = $createdAt;
+        $this->deletedAt = $deletedAt;
     }
 
-    // Getter methods
-    public function getAdminAccountID() {
-        return $this->adminAccountID;
-    }
+    // Getters
+    public function getAdminAccountID() { return $this->adminAccountID; }
+    public function getAdminProfileID() { return $this->adminProfileID; }
+    public function getRoleID() { return $this->roleID; }
+    public function getUsername() { return $this->username; }
+    public function getPassword() { return $this->password; }
+    public function getCreatedAt() { return $this->createdAt; }
+    public function getDeletedAt() { return $this->deletedAt; }
 
-    public function getRoleID() {
-        return $this->roleID;
-    }
-
-    public function getUsername() {
-        return $this->username;
-    }
-
-    public function getPwd() {
-        return $this->pwd;
-    }
-
-    public function getAdminProfileID() {
-        return $this->adminProfileID;
-    }
-
-    public function getDateCreated() {
-        return $this->dateCreated;
-    }
-
-    public function getIsDelete() {
-        return $this->isDelete;
-    }
-
-    // Setter methods
-    public function setAdminAccountID($adminAccountID) {
-        $this->adminAccountID = $adminAccountID;
-    }
-
-    public function setRoleID($roleID) {
-        $this->roleID = $roleID;
-    }
-
-    public function setUsername($username) {
-        $this->username = $username;
-    }
-
-    public function setPwd($pwd) {
-        $this->pwd = $pwd;
-    }
-
-    public function setAdminProfileID($adminProfileID) {
-        $this->adminProfileID = $adminProfileID;
-    }
-
-    public function setDateCreated($dateCreated) {
-        $this->dateCreated = $dateCreated;
-    }
-
-    public function setIsDelete($isDelete) {
-        $this->isDelete = $isDelete;
-    }
+    // Setters
+    public function setAdminProfileID($adminProfileID) { $this->adminProfileID = $adminProfileID; }
+    public function setRoleID($roleID) { $this->roleID = $roleID; }
+    public function setUsername($username) { $this->username = $username; }
+    public function setPassword($password) { $this->password = $password; }
+    public function setCreatedAt($createdAt) { $this->createdAt = $createdAt; }
+    public function setDeletedAt($deletedAt) { $this->deletedAt = $deletedAt; }
 
     // toString method
     public function __toString() {
-        return "AdminAccount [adminAccountID=" . $this->adminAccountID . 
-               ", roleID=" . $this->roleID . 
-               ", username=" . $this->username . 
-               ", pwd=" . $this->pwd . 
-               ", adminProfileID=" . $this->adminProfileID . 
-               ", dateCreated=" . $this->dateCreated . 
-               ", isDelete=" . ($this->isDelete ? 'true' : 'false') . "]";
+        return "AdminAccount { " .
+            "ID: " . $this->adminAccountID . ", " .
+            "Profile ID: " . $this->adminProfileID . ", " .
+            "Role ID: " . $this->roleID . ", " .
+            "Username: " . $this->username . ", " .
+            "Created At: " . $this->createdAt->format('Y-m-d H:i:s') . ", " .
+            "Deleted At: " . ($this->deletedAt ? $this->deletedAt->format('Y-m-d H:i:s') : 'null') .
+            " }";
     }
 }
-?>

@@ -1,20 +1,14 @@
 <?php
 class Role_PermissionModel {
-    private $rolePermissionID;
     private $roleID;
     private $permissionID;
 
-    public function __construct($rolePermissionID = null, $roleID, $permissionID) {
-        $this->rolePermissionID = $rolePermissionID;
+    public function __construct($roleID, $permissionID) {
         $this->roleID = $roleID;
         $this->permissionID = $permissionID;
     }
 
     // Getter methods
-    public function getRolePermissionID() {
-        return $this->rolePermissionID;
-    }
-
     public function getRoleID() {
         return $this->roleID;
     }
@@ -24,10 +18,6 @@ class Role_PermissionModel {
     }
 
     // Setter methods
-    public function setRolePermissionID($rolePermissionID) {
-        $this->rolePermissionID = $rolePermissionID;
-    }
-
     public function setRoleID($roleID) {
         $this->roleID = $roleID;
     }
@@ -38,8 +28,7 @@ class Role_PermissionModel {
 
     // toString method
     public function __toString() {
-        return "Role_Permission [rolePermissionID=" . $this->rolePermissionID .
-               ", roleID=" . $this->roleID .
+        return "Role_Permission [roleID=" . $this->roleID .
                ", permissionID=" . $this->permissionID . "]";
     }
 }

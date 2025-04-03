@@ -1,62 +1,39 @@
 <?php
+
 class BookOnStoreModel {
     private $bookOnStoreID;
-    private $ISBN;
+    private $bookInWarehouseID;
     private $sellingPrice;
-    private $quantity;
+    private $stock;
 
-    public function __construct(
-        $bookOnStoreID = null,
-        $ISBN,
-        $sellingPrice,
-        $quantity
-    ) {
+    // Constructor
+    public function __construct($bookOnStoreID = null, $bookInWarehouseID = null, $sellingPrice = null, $stock = null) {
         $this->bookOnStoreID = $bookOnStoreID;
-        $this->ISBN = $ISBN;
+        $this->bookInWarehouseID = $bookInWarehouseID;
         $this->sellingPrice = $sellingPrice;
-        $this->quantity = $quantity;
+        $this->stock = $stock;
     }
 
-    // Getter methods
-    public function getBookOnStoreID() {
-        return $this->bookOnStoreID;
-    }
+    // Getters and Setters
+    public function getBookOnStoreID() { return $this->bookOnStoreID; }
+    public function setBookOnStoreID($bookOnStoreID) { $this->bookOnStoreID = $bookOnStoreID; }
 
-    public function getISBN() {
-        return $this->ISBN;
-    }
+    public function getBookInWarehouseID() { return $this->bookInWarehouseID; }
+    public function setBookInWarehouseID($bookInWarehouseID) { $this->bookInWarehouseID = $bookInWarehouseID; }
 
-    public function getSellingPrice() {
-        return $this->sellingPrice;
-    }
+    public function getSellingPrice() { return $this->sellingPrice; }
+    public function setSellingPrice($sellingPrice) { $this->sellingPrice = $sellingPrice; }
 
-    public function getQuantity() {
-        return $this->quantity;
-    }
+    public function getStock() { return $this->stock; }
+    public function setStock($stock) { $this->stock = $stock; }
 
-    // Setter methods
-    public function setBookOnStoreID($bookOnStoreID) {
-        $this->bookOnStoreID = $bookOnStoreID;
-    }
-
-    public function setISBN($ISBN) {
-        $this->ISBN = $ISBN;
-    }
-
-    public function setSellingPrice($sellingPrice) {
-        $this->sellingPrice = $sellingPrice;
-    }
-
-    public function setQuantity($quantity) {
-        $this->quantity = $quantity;
-    }
-
-    // toString method
+    // ToString method
     public function __toString() {
-        return "BookOnStore [bookOnStoreID=" . $this->bookOnStoreID .
-               ", ISBN=" . $this->ISBN .
-               ", sellingPrice=" . number_format($this->sellingPrice, 2) .
-               ", quantity=" . $this->quantity . "]";
+        return "BookOnStoreModel { " .
+            "bookOnStoreID=" . $this->bookOnStoreID . ", " .
+            "bookInWarehouseID=" . $this->bookInWarehouseID . ", " .
+            "sellingPrice=" . $this->sellingPrice . ", " .
+            "stock=" . $this->stock . " " .
+            "}";
     }
 }
-?>

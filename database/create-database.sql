@@ -1,239 +1,339 @@
 CREATE DATABASE IF NOT EXISTS bookstore;
 USE bookstore;
 
--- Tạo bảng DatabaseEntity
-CREATE TABLE DatabaseEntity (
-    entityID INT AUTO_INCREMENT PRIMARY KEY,
-    entityName VARCHAR(255) NOT NULL,
-    isDelete BOOLEAN DEFAULT FALSE
+CREATE TABLE `DatabaseEntity` (
+  `entityID` int PRIMARY KEY AUTO_INCREMENT,
+  `entityName` varchar(255) NOT NULL,
+  `deletedAt` datetime DEFAULT null
 );
 
--- Tạo bảng Role
-CREATE TABLE Role (
-    roleID INT AUTO_INCREMENT PRIMARY KEY,
-    roleName VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL,
-    isDelete BOOLEAN DEFAULT FALSE
+CREATE TABLE `Permission` (
+  `permissionID` int PRIMARY KEY AUTO_INCREMENT,
+  `entityID` int NOT NULL,
+  `canCreate` bool DEFAULT false,
+  `canRead` bool DEFAULT false,
+  `canUpdate` bool DEFAULT false,
+  `canDelete` bool DEFAULT false,
+  `isRestrictedToOwnData` bool DEFAULT false
 );
 
--- Tạo bảng Permission
-CREATE TABLE Permission (
-    permissionID INT AUTO_INCREMENT PRIMARY KEY,
-    entityID INT NOT NULL,
-    canCreate BOOLEAN DEFAULT FALSE,
-    canRead BOOLEAN DEFAULT FALSE,
-    canUpdate BOOLEAN DEFAULT FALSE,
-    canDelete BOOLEAN DEFAULT FALSE,
-    isRestrictedToOwnData BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (entityID) REFERENCES DatabaseEntity(entityID)
+CREATE TABLE `Role` (
+  `roleID` int PRIMARY KEY AUTO_INCREMENT,
+  `roleName` varchar(255) NOT NULL UNIQUE,
+  `deletedAt` datetime DEFAULT null
 );
 
--- Tạo bảng Role_Permission
-CREATE TABLE Role_Permission (
-    rolePermissionID INT AUTO_INCREMENT PRIMARY KEY,
-    roleID INT NOT NULL,
-    permissionID INT NOT NULL,
-    FOREIGN KEY (roleID) REFERENCES Role(roleID),
-    FOREIGN KEY (permissionID) REFERENCES Permission(permissionID)
+CREATE TABLE `Role_Permission` (
+  `roleID` int NOT NULL,
+  `permissionID` int NOT NULL,
+  PRIMARY KEY (`roleID`, `permissionID`)
 );
 
--- Tạo bảng AdminProfile
-CREATE TABLE AdminProfile (
-    adminProfileID INT AUTO_INCREMENT PRIMARY KEY,    
-    prfName VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL,
-    gender INT,
-    dob DATE,
-    CCCD VARCHAR(20) NOT NULL,
-    phoneNumber VARCHAR(15) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    avatarURL VARCHAR(255),
-    prfAddress VARCHAR(255) CHARACTER SET utf8mb4,
-    salary DECIMAL(10, 2) NOT NULL,
-    isDelete BOOLEAN DEFAULT FALSE    
+CREATE TABLE `AdminProfile` (
+  `adminProfileID` int PRIMARY KEY AUTO_INCREMENT,
+  `prfName` varchar(255) NOT NULL,
+  `gender` int,
+  `dob` date,
+  `cccd` varchar(20) NOT NULL,
+  `phoneNumber` varchar(15) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `avatarURL` varchar(255),
+  `prfAddress` varchar(255),
+  `salary` dec(10,2),
+  `deletedAt` datetime DEFAULT null
 );
 
--- Tạo bảng AdminAccount
-CREATE TABLE AdminAccount (
-    adminAccountID INT AUTO_INCREMENT PRIMARY KEY,
-    roleID INT NOT NULL,
-    username VARCHAR(255) NOT NULL,
-    pwd VARCHAR(255) NOT NULL,
-    adminProfileID INT NOT NULL,
-    dateCreated DATETIME DEFAULT NOW(),
-    isDelete BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (adminProfileID) REFERENCES AdminProfile(adminProfileID),
-    FOREIGN KEY (roleID) REFERENCES Role(roleID)
+CREATE TABLE `AdminAccount` (
+  `adminAccountID` int PRIMARY KEY AUTO_INCREMENT,
+  `adminProfileID` int NOT NULL,
+  `roleID` int NOT NULL,
+  `username` varchar(255) UNIQUE NOT NULL,
+  `password` BINARY(60) NOT NULL,
+  `createdAt` datetime DEFAULT (now()),
+  `deletedAt` datetime DEFAULT null
 );
 
--- Tạo bảng Notification
-CREATE TABLE Notification (
-    notificationID INT AUTO_INCREMENT PRIMARY KEY,
-    adminAccountID INT NOT NULL,
-    title VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL,
-    content TEXT CHARACTER SET utf8mb4 NOT NULL,
-    isRead BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (adminAccountID) REFERENCES AdminAccount(adminAccountID)
+CREATE TABLE `EnduserAccount` (
+  `enduserAccountID` int PRIMARY KEY AUTO_INCREMENT,
+  `prfName` varchar(255) NOT NULL,
+  `gender` int,
+  `dob` date,
+  `phoneNumber` varchar(15) UNIQUE,
+  `email` varchar(255) UNIQUE,
+  `avatarURL` varchar(255),
+  `defaultAddress` varchar(255),
+  `password` BINARY(60) NOT NULL,
+  `createdAt` datetime DEFAULT (now()),
+  `deletedAt` datetime DEFAULT null
 );
 
--- Tạo bảng EnduserProfile
-CREATE TABLE EnduserProfile (
-    enduserProfileID INT AUTO_INCREMENT PRIMARY KEY,
-    prfName VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL,
-    gender INT,
-    dob DATE,
-    phoneNumber VARCHAR(15) NOT NULL,
-    email VARCHAR(255),
-    avatarURL VARCHAR(255),
-    prfAddress VARCHAR(255),
-    isDelete BOOLEAN DEFAULT FALSE
+CREATE TABLE `Notification` (
+  `notificationID` int PRIMARY KEY AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `createdAt` datetime DEFAULT (now())
 );
 
--- Tạo bảng EnduserAccount
-CREATE TABLE EnduserAccount (
-    enduserAccountID INT AUTO_INCREMENT PRIMARY KEY,
-    enduserProfileID INT NOT NULL,
-    username VARCHAR(255) NOT NULL,
-    pwd VARCHAR(255) NOT NULL,
-    dateCreated DATETIME DEFAULT NOW(),
-    isDelete BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (enduserProfileID) REFERENCES EnduserProfile(enduserProfileID)
+CREATE TABLE `Admin_Notification` (
+  `adminAccountID` int NOT NULL,
+  `notificationID` int NOT NULL,
+  `readAt` datetime DEFAULT null,
+  PRIMARY KEY (`adminAccountID`, `notificationID`)
 );
 
--- Tạo bảng DeliveryInfo
-CREATE TABLE DeliveryInfo (
-    deliveryInfoID INT AUTO_INCREMENT PRIMARY KEY,
-    enduserAccountID INT NOT NULL,
-    prfName VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL,
-    prfAddress VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL,
-    phoneNumber VARCHAR(15) NOT NULL,
-    isDelete BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (enduserAccountID) REFERENCES EnduserAccount(enduserAccountID)
+CREATE TABLE `Enduser_Notification` (
+  `enduserAccountID` int NOT NULL,
+  `notificationID` int NOT NULL,
+  `readAt` datetime DEFAULT null,
+  PRIMARY KEY (`enduserAccountID`, `notificationID`)
 );
 
--- Tạo bảng Category
-CREATE TABLE Category (
-    categoryID INT AUTO_INCREMENT PRIMARY KEY,
-    categoryName VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL,
-    dateCreate DATETIME DEFAULT NOW(),
-    isDelete BOOLEAN DEFAULT FALSE
+CREATE TABLE `DeliveryInfo` (
+  `deliveryInfoID` int PRIMARY KEY AUTO_INCREMENT,
+  `enduserAccountID` int NOT NULL,
+  `prfName` varchar(255),
+  `prfAddress` varchar(255) NOT NULL,
+  `phoneNumber` varchar(15) NOT NULL,
+  `createdAt` datetime DEFAULT (now()),
+  `deletedAt` datetime DEFAULT null
 );
 
--- Tạo bảng BookInfo
-CREATE TABLE BookInfo (
-    ISBN VARCHAR(13) PRIMARY KEY,
-    categoryID INT NOT NULL,
-    bookTitle VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL,
-    bookAuthor VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL,
-    yearOfPublication INT,
-    publisher VARCHAR(255) CHARACTER SET utf8mb4,
-    imagesURL VARCHAR(255) CHARACTER SET utf8mb4,
-    bookDesc TEXT CHARACTER SET utf8mb4,
-    isDelete BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (categoryID) REFERENCES Category(categoryID)
+CREATE TABLE `BookCategory` (
+  `categoryID` int PRIMARY KEY AUTO_INCREMENT,
+  `categoryName` varchar(255) UNIQUE NOT NULL,
+  `createdAt` datetime DEFAULT (now()),
+  `deletedAt` datetime DEFAULT null
 );
 
--- Tạo bảng BookOnStore
-CREATE TABLE BookOnStore (
-    bookOnStoreID INT AUTO_INCREMENT PRIMARY KEY,
-    ISBN VARCHAR(13) NOT NULL,
-    sellingPrice DECIMAL(15,2) NOT NULL,
-    quantity INT NOT NULL, 
-    FOREIGN KEY (ISBN) REFERENCES Bookinfo(ISBN)
+CREATE TABLE `BookAuthor` (
+  `authorID` int PRIMARY KEY AUTO_INCREMENT,
+  `authorName` varchar(255) UNIQUE NOT NULL
 );
 
--- Tạo bảng Cart
-CREATE TABLE Cart (
-    cartID INT AUTO_INCREMENT PRIMARY KEY,
-    enduserAccountID INT NOT NULL,
-    bookOnStoreID INT NOT NULL,
-    quantity INT NOT NULL,
-    FOREIGN KEY (enduserAccountID) REFERENCES EnduserAccount(enduserAccountID),
-    FOREIGN KEY (bookOnStoreID) REFERENCES BookOnStore(bookOnStoreID)
+CREATE TABLE `BookPublisher` (
+  `publisherID` int PRIMARY KEY AUTO_INCREMENT,
+  `publisherName` varchar(255) UNIQUE NOT NULL
 );
 
--- Tạo bảng Order 
-CREATE TABLE `Order` (  -- Order is a reserved word in SQL, so we use backticks
-    orderID INT AUTO_INCREMENT PRIMARY KEY,
-    deliveryinfoID INT NOT NULL,
-    orderDatetime DATETIME DEFAULT NOW(),
-    paid BOOLEAN NOT NULL,
-    orderStatus INT DEFAULT 1,
-    FOREIGN KEY (deliveryinfoID) REFERENCES Deliveryinfo(deliveryinfoID)
+CREATE TABLE `BookInfo` (
+  `bookID` int PRIMARY KEY AUTO_INCREMENT,
+  `ISBN` varchar(13) UNIQUE,
+  `bookTitle` varchar(255) UNIQUE NOT NULL,
+  `imageURL` varchar(255),
+  `ebookURL` varchar(255),
+  `bookDesc` text,
+  `createdAt` datetime DEFAULT (now()),
+  `deletedAt` datetime DEFAULT null
 );
 
--- Tạo bảng OrderDetails 
-CREATE TABLE OrderDetails (
-    orderDetailsID INT AUTO_INCREMENT PRIMARY KEY,
-    orderID INT NOT NULL,
-    bookOnStoreID INT NOT NULL,
-    purchasePrice INT NOT NULL,
-    quantity INT NOT NULL,
-    FOREIGN KEY (orderID) REFERENCES `Order`(orderID),
-    FOREIGN KEY (bookOnStoreID) REFERENCES BookOnStore(bookOnStoreID)
+CREATE TABLE `BookInfo_Category` (
+  `bookID` int NOT NULL,
+  `categoryID` int NOT NULL,
+  PRIMARY KEY (`bookID`, `categoryID`)
 );
 
--- Tạo bảng Supplier
-CREATE TABLE Supplier (
-    supplierID INT AUTO_INCREMENT PRIMARY KEY,
-    supplierName VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL,
-    supplierAddress VARCHAR(255) CHARACTER SET utf8mb4,
-    phoneNumber VARCHAR(15) NOT NULL
+CREATE TABLE `BookInfo_Author` (
+  `bookID` int NOT NULL,
+  `authorID` int NOT NULL,
+  PRIMARY KEY (`bookID`, `authorID`)
 );
 
--- Tạo bảng Supplier_Book
-CREATE TABLE Supplier_Book (
-    supplierBookID INT AUTO_INCREMENT PRIMARY KEY,
-    supplierID INT NOT NULL,
-    ISBN VARCHAR(13) NOT NULL,
-    FOREIGN KEY (supplierID) REFERENCES Supplier(supplierID),
-    FOREIGN KEY (ISBN) REFERENCES BookInfo(ISBN)
+CREATE TABLE `BookInfo_Publisher` (
+  `bookInfoPublisherID` int PRIMARY KEY AUTO_INCREMENT,
+  `bookID` int NOT NULL,
+  `publisherID` int NOT NULL,
+  `yearOfPublication` int
 );
 
--- Tạo bảng WarehouseImport 
-CREATE TABLE WarehouseImport (
-    warehouseImportID INT AUTO_INCREMENT PRIMARY KEY,
-    adminAccountID INT NOT NULL,
-    supplierID INT NOT NULL,
-    importDatetime DATETIME DEFAULT NOW(),
-    FOREIGN KEY (adminAccountID) REFERENCES AdminAccount(adminAccountID),
-    FOREIGN KEY (supplierID) REFERENCES Supplier(supplierID)
+CREATE TABLE `Supplier` (
+  `supplierID` int PRIMARY KEY AUTO_INCREMENT,
+  `supplierName` varchar(255) UNIQUE NOT NULL,
+  `supplierAddress` varchar(255),
+  `phoneNumber` varchar(15) UNIQUE NOT NULL,
+  `email` varchar(255) UNIQUE,
+  `deletedAt` datetime DEFAULT null
 );
 
--- Tạo bảng WarehouseImportDetails
-CREATE TABLE WarehouseImportDetails (
-    warehouseImportDetailsID INT AUTO_INCREMENT PRIMARY KEY,
-    warehouseImportID INT,
-    ISBN VARCHAR(13) NOT NULL,
-    importPrice DECIMAL(15,2) NOT NULL,
-    quantity INT NOT NULL,
-    FOREIGN KEY (warehouseImportID) REFERENCES WarehouseImport(warehouseImportID),
-    FOREIGN KEY (ISBN) REFERENCES BookInfo(ISBN)
+CREATE TABLE `Supplier_Book` (
+  `supplierID` int NOT NULL,
+  `bookID` int NOT NULL,
+  PRIMARY KEY (`supplierID`, `bookID`)
 );
 
--- Tạo bảng OnairStoreTicket
-CREATE TABLE OnairStoreTicket (
-    onairStoreTicketID INT AUTO_INCREMENT PRIMARY KEY,
-    adminAccountID INT NOT NULL,
-    ticketStatus INT DEFAULT 1,
-    FOREIGN KEY (adminAccountID) REFERENCES AdminAccount(adminAccountID)
+CREATE TABLE `BookInWarehouse` (
+  `bookInWarehouseID` int PRIMARY KEY AUTO_INCREMENT,
+  `bookID` int NOT NULL,
+  `warehouseImportID` int NOT NULL,
+  `stock` int NOT NULL DEFAULT 0 COMMENT 'Số lượng tồn kho'
 );
 
--- Tạo bảng OnairStoreTicketDetails
-CREATE TABLE OnairStoreTicketDetails (
-    onairStoreTicketDetailsID INT AUTO_INCREMENT PRIMARY KEY,
-    onairStoreTicketID INT NOT NULL,
-    warehouseImportDetailsID INT NOT NULL,
-    quantity INT NOT NULL,
-    FOREIGN KEY (onairStoreTicketID) REFERENCES OnairStoreTicket(onairStoreTicketID),
-    FOREIGN KEY (warehouseImportDetailsID) REFERENCES WarehouseImportDetails(warehouseImportDetailsID)
+CREATE TABLE `WarehouseImport` (
+  `warehouseImportID` int PRIMARY KEY AUTO_INCREMENT,
+  `supplierID` int NOT NULL,
+  `adminAccountID` int NOT NULL,
+  `importDatetime` datetime DEFAULT (now())
 );
 
--- Tạo bảng BookRating
-CREATE TABLE BookRating (
-    bookRatingID INT AUTO_INCREMENT PRIMARY KEY,
-    enduserAccountID INT NOT NULL,
-    bookOnStoreID INT NOT NULL,
-    rate INT NOT NULL,
-    comment TEXT CHARACTER SET utf8mb4,
-    FOREIGN KEY (enduserAccountID) REFERENCES EnduserAccount(enduserAccountID),
-    FOREIGN KEY (bookOnStoreID) REFERENCES BookOnStore(bookOnStoreID)
+CREATE TABLE `WarehouseImportDetails` (
+  `warehouseImportID` int NOT NULL,
+  `bookID` int NOT NULL,
+  `quantity` int NOT NULL,
+  `importPrice` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`warehouseImportID`, `bookID`)
 );
+
+CREATE TABLE `WarehouseExport` (
+  `warehouseExportID` int PRIMARY KEY AUTO_INCREMENT,
+  `adminExport` int NOT NULL COMMENT 'Nv kho - xuất hàng',
+  `adminReceive` int NOT NULL COMMENT 'Nv nhận hàng đưa lên cửa hàng',
+  `exportDatetime` datetime DEFAULT (now())
+);
+
+CREATE TABLE `WarehouseExportDetails` (
+  `warehouseExportID` int NOT NULL,
+  `bookInWarehouseID` int NOT NULL,
+  `quantity` int,
+  PRIMARY KEY (`warehouseExportID`, `bookInWarehouseID`)
+);
+
+CREATE TABLE `ExportRequestTicket` (
+  `exportRequestTicketID` int PRIMARY KEY AUTO_INCREMENT,
+  `adminAccountID` int NOT NULL,
+  `requestDatetime` datetime DEFAULT (now()),
+  `ticketStatus` int DEFAULT 1
+);
+
+CREATE TABLE `ExportRequestTicketDetails` (
+  `exportRequestTicketID` int NOT NULL,
+  `bookID` int NOT NULL,
+  `quantity` int NOT NULL,
+  PRIMARY KEY (`exportRequestTicketID`, `bookID`)
+);
+
+CREATE TABLE `BookOnStore` (
+  `bookOnStoreID` int PRIMARY KEY AUTO_INCREMENT,
+  `bookInWarehouseID` int NOT NULL,
+  `sellingPrice` dec(15,2) NOT NULL,
+  `stock` int NOT NULL
+);
+
+CREATE TABLE `BookRating` (
+  `bookRatingID` int PRIMARY KEY AUTO_INCREMENT,
+  `enduserAccountID` int NOT NULL,
+  `bookOnStoreID` int,
+  `rate` int NOT NULL,
+  `comment` text,
+  `createdAt` datetime DEFAULT (now())
+);
+
+CREATE TABLE `CartDetails` (
+  `enduserAccountID` int NOT NULL,
+  `bookOnStoreID` int,
+  `quantity` int DEFAULT 1,
+  `dateAdd` datetime DEFAULT (now()),
+  PRIMARY KEY (`enduserAccountID`, `bookOnStoreID`)
+);
+
+CREATE TABLE `Order` (
+  `orderID` int PRIMARY KEY AUTO_INCREMENT,
+  `deliveryinfoID` int NOT NULL,
+  `orderDatetime` datetime DEFAULT (now()),
+  `paid` bool NOT NULL,
+  `orderStatus` int DEFAULT 1
+);
+
+CREATE TABLE `OrderDetails` (
+  `orderDetailsID` int PRIMARY KEY AUTO_INCREMENT,
+  `orderID` int NOT NULL,
+  `bookOnStoreID` int,
+  `quantity` int DEFAULT 1,
+  `purchasePrice` int NOT NULL
+);
+
+CREATE INDEX `Admin_Notification_index_0` ON `Admin_Notification` (`readAt`, `adminAccountID`);
+
+CREATE INDEX `Enduser_Notification_index_1` ON `Enduser_Notification` (`readAt`, `enduserAccountID`);
+
+CREATE INDEX `BookInfo_Category_index_2` ON `BookInfo_Category` (`categoryID`, `bookID`);
+
+CREATE INDEX `BookInfo_Author_index_3` ON `BookInfo_Author` (`authorID`, `bookID`);
+
+CREATE INDEX `BookInfo_Publisher_index_4` ON `BookInfo_Publisher` (`publisherID`, `bookID`);
+
+ALTER TABLE `Permission` ADD FOREIGN KEY (`entityID`) REFERENCES `DatabaseEntity` (`entityID`);
+
+ALTER TABLE `Role_Permission` ADD FOREIGN KEY (`roleID`) REFERENCES `Role` (`roleID`);
+
+ALTER TABLE `Role_Permission` ADD FOREIGN KEY (`permissionID`) REFERENCES `Permission` (`permissionID`);
+
+ALTER TABLE `AdminAccount` ADD FOREIGN KEY (`adminProfileID`) REFERENCES `AdminProfile` (`adminProfileID`);
+
+ALTER TABLE `AdminAccount` ADD FOREIGN KEY (`roleID`) REFERENCES `Role` (`roleID`);
+
+ALTER TABLE `Admin_Notification` ADD FOREIGN KEY (`adminAccountID`) REFERENCES `AdminAccount` (`adminAccountID`);
+
+ALTER TABLE `Admin_Notification` ADD FOREIGN KEY (`notificationID`) REFERENCES `Notification` (`notificationID`);
+
+ALTER TABLE `Enduser_Notification` ADD FOREIGN KEY (`enduserAccountID`) REFERENCES `EnduserAccount` (`enduserAccountID`);
+
+ALTER TABLE `Enduser_Notification` ADD FOREIGN KEY (`notificationID`) REFERENCES `Notification` (`notificationID`);
+
+ALTER TABLE `DeliveryInfo` ADD FOREIGN KEY (`enduserAccountID`) REFERENCES `EnduserAccount` (`enduserAccountID`);
+
+ALTER TABLE `BookInfo_Category` ADD FOREIGN KEY (`bookID`) REFERENCES `BookInfo` (`bookID`);
+
+ALTER TABLE `BookInfo_Category` ADD FOREIGN KEY (`categoryID`) REFERENCES `BookCategory` (`categoryID`);
+
+ALTER TABLE `BookInfo_Author` ADD FOREIGN KEY (`bookID`) REFERENCES `BookInfo` (`bookID`);
+
+ALTER TABLE `BookInfo_Author` ADD FOREIGN KEY (`authorID`) REFERENCES `BookAuthor` (`authorID`);
+
+ALTER TABLE `BookInfo_Publisher` ADD FOREIGN KEY (`bookID`) REFERENCES `BookInfo` (`bookID`);
+
+ALTER TABLE `BookInfo_Publisher` ADD FOREIGN KEY (`publisherID`) REFERENCES `BookPublisher` (`publisherID`);
+
+ALTER TABLE `Supplier_Book` ADD FOREIGN KEY (`supplierID`) REFERENCES `Supplier` (`supplierID`);
+
+ALTER TABLE `Supplier_Book` ADD FOREIGN KEY (`bookID`) REFERENCES `BookInfo` (`bookID`);
+
+ALTER TABLE `BookInWarehouse` ADD FOREIGN KEY (`bookID`) REFERENCES `BookInfo` (`bookID`);
+
+ALTER TABLE `BookInWarehouse` ADD FOREIGN KEY (`warehouseImportID`) REFERENCES `WarehouseImport` (`warehouseImportID`);
+
+ALTER TABLE `WarehouseImport` ADD FOREIGN KEY (`supplierID`) REFERENCES `Supplier` (`supplierID`);
+
+ALTER TABLE `WarehouseImport` ADD FOREIGN KEY (`adminAccountID`) REFERENCES `AdminAccount` (`adminAccountID`);
+
+ALTER TABLE `WarehouseImportDetails` ADD FOREIGN KEY (`warehouseImportID`) REFERENCES `WarehouseImport` (`warehouseImportID`);
+
+ALTER TABLE `WarehouseImportDetails` ADD FOREIGN KEY (`bookID`) REFERENCES `BookInfo` (`bookID`);
+
+ALTER TABLE `WarehouseExport` ADD FOREIGN KEY (`adminExport`) REFERENCES `AdminAccount` (`adminAccountID`);
+
+ALTER TABLE `WarehouseExport` ADD FOREIGN KEY (`adminReceive`) REFERENCES `AdminAccount` (`adminAccountID`);
+
+ALTER TABLE `WarehouseExportDetails` ADD FOREIGN KEY (`warehouseExportID`) REFERENCES `WarehouseExport` (`warehouseExportID`);
+
+ALTER TABLE `WarehouseExportDetails` ADD FOREIGN KEY (`bookInWarehouseID`) REFERENCES `BookInWarehouse` (`bookInWarehouseID`);
+
+ALTER TABLE `ExportRequestTicket` ADD FOREIGN KEY (`adminAccountID`) REFERENCES `AdminAccount` (`adminAccountID`);
+
+ALTER TABLE `ExportRequestTicketDetails` ADD FOREIGN KEY (`exportRequestTicketID`) REFERENCES `ExportRequestTicket` (`exportRequestTicketID`);
+
+ALTER TABLE `ExportRequestTicketDetails` ADD FOREIGN KEY (`bookID`) REFERENCES `BookInfo` (`bookID`);
+
+ALTER TABLE `BookOnStore` ADD FOREIGN KEY (`bookInWarehouseID`) REFERENCES `BookInWarehouse` (`bookInWarehouseID`);
+
+ALTER TABLE `BookRating` ADD FOREIGN KEY (`enduserAccountID`) REFERENCES `EnduserAccount` (`enduserAccountID`);
+
+ALTER TABLE `BookRating` ADD FOREIGN KEY (`bookOnStoreID`) REFERENCES `BookOnStore` (`bookOnStoreID`);
+
+ALTER TABLE `CartDetails` ADD FOREIGN KEY (`enduserAccountID`) REFERENCES `EnduserAccount` (`enduserAccountID`);
+
+ALTER TABLE `CartDetails` ADD FOREIGN KEY (`bookOnStoreID`) REFERENCES `BookOnStore` (`bookOnStoreID`);
+
+ALTER TABLE `Order` ADD FOREIGN KEY (`deliveryinfoID`) REFERENCES `DeliveryInfo` (`deliveryInfoID`);
+
+ALTER TABLE `OrderDetails` ADD FOREIGN KEY (`orderID`) REFERENCES `Order` (`orderID`);
+
+ALTER TABLE `OrderDetails` ADD FOREIGN KEY (`bookOnStoreID`) REFERENCES `BookOnStore` (`bookOnStoreID`);

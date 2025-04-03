@@ -1,122 +1,63 @@
 <?php
+
 class BookInfoModel {
+    private $bookID;
     private $ISBN;
-    private $categoryID;
     private $bookTitle;
-    private $bookAuthor;
-    private $yearOfPublication;
-    private $publisher;
-    private $imagesURL;
+    private $imageURL;
+    private $ebookURL;
     private $bookDesc;
-    private $isDelete;
+    private $createdAt;
+    private $deletedAt;
 
-    public function __construct(
-        $ISBN,
-        $categoryID,
-        $bookTitle,
-        $bookAuthor,
-        $yearOfPublication = null,
-        $publisher = null,
-        $imagesURL = null,
-        $bookDesc = null,
-        $isDelete = false
-    ) {
+    // Constructor
+    public function __construct($bookID = null, $ISBN = null, $bookTitle = null, $imageURL = null, $ebookURL = null, $bookDesc = null, $createdAt = null, $deletedAt = null) {
+        $this->bookID = $bookID;
         $this->ISBN = $ISBN;
-        $this->categoryID = $categoryID;
         $this->bookTitle = $bookTitle;
-        $this->bookAuthor = $bookAuthor;
-        $this->yearOfPublication = $yearOfPublication;
-        $this->publisher = $publisher;
-        $this->imagesURL = $imagesURL;
+        $this->imageURL = $imageURL;
+        $this->ebookURL = $ebookURL;
         $this->bookDesc = $bookDesc;
-        $this->isDelete = $isDelete;
+        $this->createdAt = $createdAt;
+        $this->deletedAt = $deletedAt;
     }
 
-    // Getter methods
-    public function getISBN() {
-        return $this->ISBN;
-    }
+    // Getters and Setters
+    public function getBookID() { return $this->bookID; }
+    public function setBookID($bookID) { $this->bookID = $bookID; }
 
-    public function getCategoryID() {
-        return $this->categoryID;
-    }
+    public function getISBN() { return $this->ISBN; }
+    public function setISBN($ISBN) { $this->ISBN = $ISBN; }
 
-    public function getBookTitle() {
-        return $this->bookTitle;
-    }
+    public function getBookTitle() { return $this->bookTitle; }
+    public function setBookTitle($bookTitle) { $this->bookTitle = $bookTitle; }
 
-    public function getBookAuthor() {
-        return $this->bookAuthor;
-    }
+    public function getImageURL() { return $this->imageURL; }
+    public function setImageURL($imageURL) { $this->imageURL = $imageURL; }
 
-    public function getYearOfPublication() {
-        return $this->yearOfPublication;
-    }
+    public function getEbookURL() { return $this->ebookURL; }
+    public function setEbookURL($ebookURL) { $this->ebookURL = $ebookURL; }
 
-    public function getPublisher() {
-        return $this->publisher;
-    }
+    public function getBookDesc() { return $this->bookDesc; }
+    public function setBookDesc($bookDesc) { $this->bookDesc = $bookDesc; }
 
-    public function getImagesURL() {
-        return $this->imagesURL;
-    }
+    public function getCreatedAt() { return $this->createdAt; }
+    public function setCreatedAt($createdAt) { $this->createdAt = $createdAt; }
 
-    public function getBookDesc() {
-        return $this->bookDesc;
-    }
+    public function getDeletedAt() { return $this->deletedAt; }
+    public function setDeletedAt($deletedAt) { $this->deletedAt = $deletedAt; }
 
-    public function getIsDelete() {
-        return $this->isDelete;
-    }
-
-    // Setter methods
-    public function setISBN($ISBN) {
-        $this->ISBN = $ISBN;
-    }
-
-    public function setCategoryID($categoryID) {
-        $this->categoryID = $categoryID;
-    }
-
-    public function setBookTitle($bookTitle) {
-        $this->bookTitle = $bookTitle;
-    }
-
-    public function setBookAuthor($bookAuthor) {
-        $this->bookAuthor = $bookAuthor;
-    }
-
-    public function setYearOfPublication($yearOfPublication) {
-        $this->yearOfPublication = $yearOfPublication;
-    }
-
-    public function setPublisher($publisher) {
-        $this->publisher = $publisher;
-    }
-
-    public function setImagesURL($imagesURL) {
-        $this->imagesURL = $imagesURL;
-    }
-
-    public function setBookDesc($bookDesc) {
-        $this->bookDesc = $bookDesc;
-    }
-
-    public function setIsDelete($isDelete) {
-        $this->isDelete = $isDelete;
-    }
-
-    // toString method
+    // ToString method
     public function __toString() {
-        return "BookInfo [ISBN=" . $this->ISBN .
-               ", categoryID=" . $this->categoryID .
-               ", bookTitle=" . $this->bookTitle .
-               ", bookAuthor=" . $this->bookAuthor .
-               ", yearOfPublication=" . $this->yearOfPublication .
-               ", publisher=" . $this->publisher .
-               ", imagesURL=" . $this->imagesURL .
-               ", bookDesc=" . substr($this->bookDesc ?? '', 0, 30) . "..." .
-               ", isDelete=" . ($this->isDelete ? 'true' : 'false') . "]";
+        return "BookInfoModel { " .
+            "bookID=" . $this->bookID . ", " .
+            "ISBN='" . $this->ISBN . "', " .
+            "bookTitle='" . $this->bookTitle . "', " .
+            "imageURL='" . $this->imageURL . "', " .
+            "ebookURL='" . $this->ebookURL . "', " .
+            "bookDesc='" . $this->bookDesc . "', " .
+            "createdAt='" . $this->createdAt . "', " .
+            "deletedAt='" . $this->deletedAt . "' " .
+            "}";
     }
 }
-?>

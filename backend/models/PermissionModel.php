@@ -8,9 +8,15 @@ class PermissionModel {
     private $canDelete;
     private $isRestrictedToOwnData;
 
-    public function __construct($permissionID = null, $entityID, $canCreate = false, 
-                               $canRead = false, $canUpdate = false, $canDelete = false, 
-                               $isRestrictedToOwnData = false) {
+    public function __construct(
+        $permissionID,
+        $entityID,
+        $canCreate = false,
+        $canRead = false,
+        $canUpdate = false,
+        $canDelete = false,
+        $isRestrictedToOwnData = false
+    ) {
         $this->permissionID = $permissionID;
         $this->entityID = $entityID;
         $this->canCreate = $canCreate;
@@ -20,73 +26,32 @@ class PermissionModel {
         $this->isRestrictedToOwnData = $isRestrictedToOwnData;
     }
 
-    // Getter methods
-    public function getPermissionID() {
-        return $this->permissionID;
-    }
+    // Getters
+    public function getPermissionID() { return $this->permissionID; }
+    public function getEntityID() { return $this->entityID; }
+    public function canCreate() { return $this->canCreate; }
+    public function canRead() { return $this->canRead; }
+    public function canUpdate() { return $this->canUpdate; }
+    public function canDelete() { return $this->canDelete; }
+    public function isRestrictedToOwnData() { return $this->isRestrictedToOwnData; }
 
-    public function getEntityID() {
-        return $this->entityID;
-    }
-
-    public function getCanCreate() {
-        return $this->canCreate;
-    }
-
-    public function getCanRead() {
-        return $this->canRead;
-    }
-
-    public function getCanUpdate() {
-        return $this->canUpdate;
-    }
-
-    public function getCanDelete() {
-        return $this->canDelete;
-    }
-
-    public function getIsRestrictedToOwnData() {
-        return $this->isRestrictedToOwnData;
-    }
-
-    // Setter methods
-    public function setPermissionID($permissionID) {
-        $this->permissionID = $permissionID;
-    }
-
-    public function setEntityID($entityID) {
-        $this->entityID = $entityID;
-    }
-
-    public function setCanCreate($canCreate) {
-        $this->canCreate = $canCreate;
-    }
-
-    public function setCanRead($canRead) {
-        $this->canRead = $canRead;
-    }
-
-    public function setCanUpdate($canUpdate) {
-        $this->canUpdate = $canUpdate;
-    }
-
-    public function setCanDelete($canDelete) {
-        $this->canDelete = $canDelete;
-    }
-
-    public function setIsRestrictedToOwnData($isRestrictedToOwnData) {
-        $this->isRestrictedToOwnData = $isRestrictedToOwnData;
-    }
+    // Setters
+    public function setCanCreate($canCreate) { $this->canCreate = $canCreate; }
+    public function setCanRead($canRead) { $this->canRead = $canRead; }
+    public function setCanUpdate($canUpdate) { $this->canUpdate = $canUpdate; }
+    public function setCanDelete($canDelete) { $this->canDelete = $canDelete; }
+    public function setIsRestrictedToOwnData($isRestrictedToOwnData) { $this->isRestrictedToOwnData = $isRestrictedToOwnData; }
 
     // toString method
     public function __toString() {
-        return "Permission [permissionID=" . $this->permissionID .
-               ", entityID=" . $this->entityID .
-               ", canCreate=" . ($this->canCreate ? 'true' : 'false') .
-               ", canRead=" . ($this->canRead ? 'true' : 'false') .
-               ", canUpdate=" . ($this->canUpdate ? 'true' : 'false') .
-               ", canDelete=" . ($this->canDelete ? 'true' : 'false') .
-               ", isRestrictedToOwnData=" . ($this->isRestrictedToOwnData ? 'true' : 'false') . "]";
+        return "Permission { " .
+            "ID: " . $this->permissionID . ", " .
+            "Entity ID: " . $this->entityID . ", " .
+            "Create: " . ($this->canCreate ? 'true' : 'false') . ", " .
+            "Read: " . ($this->canRead ? 'true' : 'false') . ", " .
+            "Update: " . ($this->canUpdate ? 'true' : 'false') . ", " .
+            "Delete: " . ($this->canDelete ? 'true' : 'false') . ", " .
+            "Restricted to Own Data: " . ($this->isRestrictedToOwnData ? 'true' : 'false') .
+            " }";
     }
 }
-?>

@@ -1,74 +1,40 @@
 <?php
 class NotificationModel {
     private $notificationID;
-    private $adminAccountID;
     private $title;
     private $content;
-    private $isRead;
+    private $createdAt;
 
     public function __construct(
-        $notificationID = null,
-        $adminAccountID,
+        $notificationID,
         $title,
         $content,
-        $isRead = false
+        $createdAt
     ) {
         $this->notificationID = $notificationID;
-        $this->adminAccountID = $adminAccountID;
         $this->title = $title;
         $this->content = $content;
-        $this->isRead = $isRead;
+        $this->createdAt = $createdAt;
     }
 
-    // Getter methods
-    public function getNotificationID() {
-        return $this->notificationID;
-    }
+    // Getters
+    public function getNotificationID() { return $this->notificationID; }
+    public function getTitle() { return $this->title; }
+    public function getContent() { return $this->content; }
+    public function getCreatedAt() { return $this->createdAt; }
 
-    public function getAdminAccountID() {
-        return $this->adminAccountID;
-    }
-
-    public function getTitle() {
-        return $this->title;
-    }
-
-    public function getContent() {
-        return $this->content;
-    }
-
-    public function getIsRead() {
-        return $this->isRead;
-    }
-
-    // Setter methods
-    public function setNotificationID($notificationID) {
-        $this->notificationID = $notificationID;
-    }
-
-    public function setAdminAccountID($adminAccountID) {
-        $this->adminAccountID = $adminAccountID;
-    }
-
-    public function setTitle($title) {
-        $this->title = $title;
-    }
-
-    public function setContent($content) {
-        $this->content = $content;
-    }
-
-    public function setIsRead($isRead) {
-        $this->isRead = $isRead;
-    }
+    // Setters
+    public function setTitle($title) { $this->title = $title; }
+    public function setContent($content) { $this->content = $content; }
+    public function setCreatedAt($createdAt) { $this->createdAt = $createdAt; }
 
     // toString method
     public function __toString() {
-        return "Notification [notificationID=" . $this->notificationID .
-               ", adminAccountID=" . $this->adminAccountID .
-               ", title=" . $this->title .
-               ", content=" . substr($this->content, 0, 50) . "..." .
-               ", isRead=" . ($this->isRead ? 'true' : 'false') . "]";
+        return "Notification { " .
+            "ID: " . $this->notificationID . ", " .
+            "Title: " . $this->title . ", " .
+            "Content: " . $this->content . ", " .
+            "Created At: " . $this->createdAt->format('Y-m-d H:i:s') . 
+            " }";
     }
 }
-?>

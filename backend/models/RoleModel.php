@@ -2,12 +2,12 @@
 class RoleModel {
     private $roleID;
     private $roleName;
-    private $isDelete;
+    private $deletedAt;
 
-    public function __construct($roleID = null, $roleName, $isDelete = false) {
+    public function __construct($roleID = null, $roleName, $deletedAt = false) {
         $this->roleID = $roleID;
         $this->roleName = $roleName;
-        $this->isDelete = $isDelete;
+        $this->deletedAt = $deletedAt;
     }
 
     // Getter methods
@@ -19,8 +19,8 @@ class RoleModel {
         return $this->roleName;
     }
 
-    public function getIsDelete() {
-        return $this->isDelete;
+    public function getdeletedAt() {
+        return $this->deletedAt;
     }
 
     // Setter methods
@@ -32,15 +32,16 @@ class RoleModel {
         $this->roleName = $roleName;
     }
 
-    public function setIsDelete($isDelete) {
-        $this->isDelete = $isDelete;
+    public function setdeletedAt($deletedAt) {
+        $this->deletedAt = $deletedAt;
     }
 
     // toString method
     public function __toString() {
         return "Role [roleID=" . $this->roleID . 
-               ", roleName=" . $this->roleName . 
-               ", isDelete=" . ($this->isDelete ? 'true' : 'false') . "]";
+                ", roleName=" . $this->roleName . 
+                "Deleted At: " . ($this->deletedAt ? $this->deletedAt->format('Y-m-d H:i:s') : 'null') .
+                " }";
     }
 }
 ?>

@@ -1,74 +1,44 @@
 <?php
+
 class OrderModel {
     private $orderID;
-    private $deliveryInfoID;
+    private $deliveryinfoID;
     private $orderDatetime;
     private $paid;
     private $orderStatus;
 
-    public function __construct(
-        $orderID = null,
-        $deliveryInfoID,
-        $orderDatetime = null,
-        $paid,
-        $orderStatus = 1
-    ) {
+    // Constructor
+    public function __construct($orderID = null, $deliveryinfoID = null, $orderDatetime = null, $paid = null, $orderStatus = 1) {
         $this->orderID = $orderID;
-        $this->deliveryInfoID = $deliveryInfoID;
-        $this->orderDatetime = $orderDatetime ?? date('Y-m-d H:i:s');
-        $this->paid = $paid;
-        $this->orderStatus = $orderStatus;
-    }
-
-    // Getter methods
-    public function getOrderID() {
-        return $this->orderID;
-    }
-
-    public function getDeliveryInfoID() {
-        return $this->deliveryInfoID;
-    }
-
-    public function getOrderDatetime() {
-        return $this->orderDatetime;
-    }
-
-    public function getPaid() {
-        return $this->paid;
-    }
-
-    public function getOrderStatus() {
-        return $this->orderStatus;
-    }
-
-    // Setter methods
-    public function setOrderID($orderID) {
-        $this->orderID = $orderID;
-    }
-
-    public function setDeliveryInfoID($deliveryInfoID) {
-        $this->deliveryInfoID = $deliveryInfoID;
-    }
-
-    public function setOrderDatetime($orderDatetime) {
+        $this->deliveryinfoID = $deliveryinfoID;
         $this->orderDatetime = $orderDatetime;
-    }
-
-    public function setPaid($paid) {
         $this->paid = $paid;
-    }
-
-    public function setOrderStatus($orderStatus) {
         $this->orderStatus = $orderStatus;
     }
 
-    // toString method
+    // Getters and Setters
+    public function getOrderID() { return $this->orderID; }
+    public function setOrderID($orderID) { $this->orderID = $orderID; }
+
+    public function getDeliveryinfoID() { return $this->deliveryinfoID; }
+    public function setDeliveryinfoID($deliveryinfoID) { $this->deliveryinfoID = $deliveryinfoID; }
+
+    public function getOrderDatetime() { return $this->orderDatetime; }
+    public function setOrderDatetime($orderDatetime) { $this->orderDatetime = $orderDatetime; }
+
+    public function getPaid() { return $this->paid; }
+    public function setPaid($paid) { $this->paid = $paid; }
+
+    public function getOrderStatus() { return $this->orderStatus; }
+    public function setOrderStatus($orderStatus) { $this->orderStatus = $orderStatus; }
+
+    // ToString method
     public function __toString() {
-        return "Order [orderID=" . $this->orderID .
-               ", deliveryInfoID=" . $this->deliveryInfoID .
-               ", orderDatetime=" . $this->orderDatetime .
-               ", paid=" . ($this->paid ? 'true' : 'false') .
-               ", orderStatus=" . $this->orderStatus . "]";
+        return "OrderModel { " .
+            "orderID=" . $this->orderID . ", " .
+            "deliveryinfoID=" . $this->deliveryinfoID . ", " .
+            "orderDatetime='" . $this->orderDatetime . "', " .
+            "paid=" . $this->paid . ", " .
+            "orderStatus=" . $this->orderStatus . " }";
     }
 }
-?>

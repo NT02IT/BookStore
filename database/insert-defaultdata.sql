@@ -1,220 +1,92 @@
 USE bookstore;
 
--- Insert data into DatabaseEntity table
+-- Thêm danh sách Entitys
 INSERT INTO DatabaseEntity (entityName) VALUES
-('Role'),
+('DatabaseEntity'),
 ('Permission'),
+('Role'),
+('Role_Permission'),
 ('AdminProfile'),
 ('AdminAccount'),
-('Notification'),
-('EnduserProfile'),
 ('EnduserAccount'),
+('Notification'),
+('Admin_Notification'),
+('Enduser_Notification'),
 ('DeliveryInfo'),
-('Category'),
+('BookCategory'),
+('BookAuthor'),
+('BookPublisher'),
 ('BookInfo'),
-('BookOnStore'),
-('Cart'),
-('Order'),
-('OrderDetails'),
+('BookInfo_Category'),
+('BookInfo_Author'),
+('BookInfo_Publisher'),
 ('Supplier'),
+('Supplier_Book'),
+('BookInWarehouse'),
 ('WarehouseImport'),
 ('WarehouseImportDetails'),
-('OnairStoreTicket'),
-('OnairStoreTicketDetails'),
-('BookRating');
+('WarehouseExport'),
+('WarehouseExportDetails'),
+('ExportRequestTicket'),
+('ExportRequestTicketDetails'),
+('BookOnStore'),
+('BookRating'),
+('CartDetails'),
+('Order'),
+('OrderDetails');
 
--- Insert data into Role table
+-- Thêm danh sách Role
 INSERT INTO Role (roleName) VALUES
 ('Admin'),
 ('Sales staff'),
 ('Warehouse staff'),
 ('HR Manager');
 
--- Insert data into Permission table (Permission for Admin)
-INSERT INTO Permission (entityID, canCreate, canRead, canUpdate, canDelete, isRestrictedToOwnData) VALUES
-(1, TRUE, TRUE, TRUE, TRUE, FALSE),
-(2, TRUE, TRUE, TRUE, TRUE, FALSE),
-(3, TRUE, TRUE, TRUE, TRUE, FALSE),
-(4, TRUE, TRUE, TRUE, TRUE, FALSE),
-(5, TRUE, TRUE, TRUE, TRUE, FALSE),
-(6, TRUE, TRUE, TRUE, TRUE, FALSE),
-(7, TRUE, TRUE, TRUE, TRUE, FALSE),
-(8, TRUE, TRUE, TRUE, TRUE, FALSE),
-(9, TRUE, TRUE, TRUE, TRUE, FALSE),
-(10, TRUE, TRUE, TRUE, TRUE, FALSE),
-(11, TRUE, TRUE, TRUE, TRUE, FALSE),
-(12, TRUE, TRUE, TRUE, TRUE, FALSE),
-(13, TRUE, TRUE, TRUE, TRUE, FALSE),
-(14, TRUE, TRUE, TRUE, TRUE, FALSE),
-(15, TRUE, TRUE, TRUE, TRUE, FALSE),
-(16, TRUE, TRUE, TRUE, TRUE, FALSE),
-(17, TRUE, TRUE, TRUE, TRUE, FALSE),
-(18, TRUE, TRUE, TRUE, TRUE, FALSE),
-(19, TRUE, TRUE, TRUE, TRUE, FALSE),
-(20, TRUE, TRUE, TRUE, TRUE, FALSE);
+-- Admin có toàn quyền trên tất cả entities
+INSERT INTO Permission (entityID, canCreate, canRead, canUpdate, canDelete, isRestrictedToOwnData)
+SELECT entityID, true, true, true, true, false FROM DatabaseEntity;
 
--- Insert data into Role_Permission table (Admin role)
-INSERT INTO Role_Permission (roleID, permissionID) VALUES
-(1, 1),
-(1, 2),
-(1, 3),
-(1, 4),
-(1, 5),
-(1, 6),
-(1, 7),
-(1, 8),
-(1, 9),
-(1, 10),
-(1, 11),
-(1, 12),
-(1, 13),
-(1, 14),
-(1, 15),
-(1, 16),
-(1, 17),
-(1, 18),
-(1, 19),
-(1, 20);
+-- Gán quyền Admin (được toàn quyền)
+INSERT INTO Role_Permission (roleID, permissionID)
+SELECT (SELECT roleID FROM Role WHERE roleName = 'Admin'), permissionID FROM Permission;
 
--- Insert data into Permission table  (Permission for Sales staff)
-INSERT INTO Permission (entityID, canCreate, canRead, canUpdate, canDelete, isRestrictedToOwnData) VALUES
-(1, FALSE, FALSE, FALSE, FALSE, FALSE),
-(2, FALSE, FALSE, FALSE, FALSE, FALSE),
-(3, FALSE, FALSE, FALSE, FALSE, TRUE),
-(4, FALSE, FALSE, FALSE, FALSE, TRUE),
-(5, FALSE, FALSE, FALSE, FALSE, TRUE),
-(6, TRUE, TRUE, TRUE, TRUE, FALSE),
-(7, TRUE, TRUE, TRUE, TRUE, FALSE),
-(8, TRUE, TRUE, TRUE, TRUE, FALSE),
-(9, FALSE, TRUE, FALSE, FALSE, FALSE),
-(10, FALSE, TRUE, FALSE, FALSE, FALSE),
-(11, TRUE, TRUE, TRUE, TRUE, FALSE),
-(12, FALSE, FALSE, FALSE, FALSE, FALSE),
-(13, TRUE, TRUE, TRUE, TRUE, FALSE),
-(14, TRUE, TRUE, TRUE, TRUE, FALSE),
-(15, FALSE, FALSE, FALSE, FALSE, FALSE),
-(16, FALSE, TRUE, FALSE, FALSE, FALSE),
-(17, FALSE, TRUE, FALSE, FALSE, FALSE),
-(18, TRUE, TRUE, TRUE, TRUE, FALSE),
-(19, TRUE, TRUE, TRUE, TRUE, FALSE),
-(20, FALSE, TRUE, FALSE, FALSE, FALSE);
+-- Sales staff chỉ có quyền trên các bảng liên quan đến bán hàng
+INSERT INTO Permission (entityID, canCreate, canRead, canUpdate, canDelete, isRestrictedToOwnData)
+SELECT entityID, true, true, true, false, true 
+FROM DatabaseEntity 
+WHERE entityName IN ('Order', 'OrderDetails', 'CartDetails', 'EnduserAccount', 'BookOnStore', 'BookRating');
 
--- Insert data into Role_Permission table (Sales staff role)
-INSERT INTO Role_Permission (roleID, permissionID) VALUES
-(2, 21),
-(2, 22),
-(2, 23),
-(2, 24),
-(2, 25),
-(2, 26),
-(2, 27),
-(2, 28),
-(2, 29),
-(2, 30),
-(2, 31),
-(2, 32),
-(2, 33),
-(2, 34),
-(2, 35),
-(2, 36),
-(2, 37),
-(2, 38),
-(2, 39),
-(2, 40);
+-- Gán quyền Sales staff
+INSERT INTO Role_Permission (roleID, permissionID)
+SELECT (SELECT roleID FROM Role WHERE roleName = 'Sales staff'), permissionID 
+FROM Permission 
+WHERE entityID IN (SELECT entityID FROM DatabaseEntity WHERE entityName IN ('Order', 'OrderDetails', 'CartDetails', 'EnduserAccount', 'BookOnStore', 'BookRating'));
 
--- Insert data into Permission table  (Permission for Warehouse staff)
-INSERT INTO Permission (entityID, canCreate, canRead, canUpdate, canDelete, isRestrictedToOwnData) VALUES
-(1, FALSE, FALSE, FALSE, FALSE, FALSE),
-(2, FALSE, FALSE, FALSE, FALSE, FALSE),
-(3, FALSE, FALSE, FALSE, FALSE, TRUE),
-(4, FALSE, FALSE, FALSE, FALSE, TRUE),
-(5, FALSE, FALSE, FALSE, FALSE, TRUE),
-(6, FALSE, FALSE, FALSE, FALSE, FALSE),
-(7, FALSE, FALSE, FALSE, FALSE, FALSE),
-(8, FALSE, FALSE, FALSE, FALSE, FALSE),
-(9, TRUE, TRUE, TRUE, TRUE, FALSE),
-(10, TRUE, TRUE, TRUE, TRUE, FALSE),
-(11, FALSE, FALSE, FALSE, FALSE, FALSE),
-(12, FALSE, FALSE, FALSE, FALSE, FALSE),
-(13, FALSE, FALSE, FALSE, FALSE, FALSE),
-(14, FALSE, FALSE, FALSE, FALSE, FALSE),
-(15, TRUE, TRUE, TRUE, TRUE, FALSE),
-(16, TRUE, TRUE, TRUE, TRUE, FALSE),
-(17, TRUE, TRUE, TRUE, TRUE, FALSE),
-(18, FALSE, TRUE, TRUE, TRUE, FALSE),
-(19, FALSE, TRUE, TRUE, TRUE, FALSE),
-(20, FALSE, FALSE, FALSE, FALSE, FALSE);
+-- Warehouse staff chỉ có quyền trên kho, xuất nhập hàng
+INSERT INTO Permission (entityID, canCreate, canRead, canUpdate, canDelete, isRestrictedToOwnData)
+SELECT entityID, true, true, true, false, false
+FROM DatabaseEntity
+WHERE entityName IN ('BookInWarehouse', 'WarehouseImport', 'WarehouseImportDetails', 'WarehouseExport', 'WarehouseExportDetails', 'ExportRequestTicket', 'ExportRequestTicketDetails');
 
--- Insert data into Role_Permission table (Warehouse staff role)
-INSERT INTO Role_Permission (roleID, permissionID) VALUES
-(3, 41),
-(3, 42),
-(3, 43),
-(3, 44),
-(3, 45),
-(3, 46),
-(3, 47),
-(3, 48),
-(3, 49),
-(3, 50),
-(3, 51),
-(3, 52),
-(3, 53),
-(3, 54),
-(3, 55),
-(3, 56),
-(3, 57),
-(3, 58),
-(3, 59),
-(3, 60);
+-- Gán quyền Warehouse staff
+INSERT INTO Role_Permission (roleID, permissionID)
+SELECT (SELECT roleID FROM Role WHERE roleName = 'Warehouse staff'), permissionID 
+FROM Permission 
+WHERE entityID IN (SELECT entityID FROM DatabaseEntity WHERE entityName IN ('BookInWarehouse', 'WarehouseImport', 'WarehouseImportDetails', 'WarehouseExport', 'WarehouseExportDetails', 'ExportRequestTicket', 'ExportRequestTicketDetails'));
 
--- Insert data into Permission table  (Permission for HR Manager)
-INSERT INTO Permission (entityID, canCreate, canRead, canUpdate, canDelete, isRestrictedToOwnData) VALUES
-(1, TRUE, TRUE, TRUE, TRUE, FALSE),
-(2, TRUE, TRUE, TRUE, TRUE, FALSE),
-(3, TRUE, TRUE, TRUE, TRUE, FALSE),
-(4, TRUE, TRUE, TRUE, TRUE, FALSE),
-(5, FALSE, FALSE, FALSE, FALSE, TRUE),
-(6, FALSE, FALSE, FALSE, FALSE, FALSE),
-(7, FALSE, FALSE, FALSE, FALSE, FALSE),
-(8, FALSE, FALSE, FALSE, FALSE, FALSE),
-(9, FALSE, FALSE, FALSE, FALSE, FALSE),
-(10, FALSE, FALSE, FALSE, FALSE, FALSE),
-(11, FALSE, FALSE, FALSE, FALSE, FALSE),
-(12, FALSE, FALSE, FALSE, FALSE, FALSE),
-(13, FALSE, FALSE, FALSE, FALSE, FALSE),
-(14, FALSE, FALSE, FALSE, FALSE, FALSE),
-(15, TRUE, TRUE, TRUE, TRUE, FALSE),
-(16, FALSE, FALSE, FALSE, FALSE, FALSE),
-(17, FALSE, FALSE, FALSE, FALSE, FALSE),
-(18, FALSE, FALSE, FALSE, FALSE, FALSE),
-(19, FALSE, FALSE, FALSE, FALSE, FALSE),
-(20, FALSE, FALSE, FALSE, FALSE, FALSE);
+-- HR Manager chỉ có quyền trên nhân sự và tài khoản admin
+INSERT INTO Permission (entityID, canCreate, canRead, canUpdate, canDelete, isRestrictedToOwnData)
+SELECT entityID, true, true, true, false, false
+FROM DatabaseEntity
+WHERE entityName IN ('AdminProfile', 'AdminAccount', 'Role', 'Role_Permission');
 
--- Insert data into Role_Permission table (Warehouse staff role)
-INSERT INTO Role_Permission (roleID, permissionID) VALUES
-(4, 61),
-(4, 62),
-(4, 63),
-(4, 64),
-(4, 65),
-(4, 66),
-(4, 67),
-(4, 68),
-(4, 69),
-(4, 70),
-(4, 71),
-(4, 72),
-(4, 73),
-(4, 74),
-(4, 75),
-(4, 76),
-(4, 77),
-(4, 78),
-(4, 79),
-(4, 80);
+-- Gán quyền HR Manager
+INSERT INTO Role_Permission (roleID, permissionID)
+SELECT (SELECT roleID FROM Role WHERE roleName = 'HR Manager'), permissionID 
+FROM Permission 
+WHERE entityID IN (SELECT entityID FROM DatabaseEntity WHERE entityName IN ('AdminProfile', 'AdminAccount', 'Role', 'Role_Permission'));
 
--- Insert data into AdminProfile table
+-- Thêm AdminProfile
 INSERT INTO AdminProfile (prfName, CCCD, phoneNumber, email, salary) VALUES
 ('Admin', '123456789012', '0901234567', 'lowtee.vn@gmail.com', 100000000.00),
 ('Nguyễn Anh Tuấn', '123456789012', '0901234567', 'lowtee.vn@gmail.com', 10000000.00),
@@ -222,11 +94,86 @@ INSERT INTO AdminProfile (prfName, CCCD, phoneNumber, email, salary) VALUES
 ('Nguyễn Công Huấn', '123456789012', '0901234567', 'huan82141@gmail.com', 10000000.00),
 ('Nguyễn Đức Toàn', '123456789012', '0901234567', 'lowtee.vn@gmail.com', 10000000.00);
 
--- Insert data into AdminAccount table
+-- Tạo tài khoản cho Admin
 -- Using SHA256 for password hashing
-INSERT INTO AdminAccount (roleID, username, pwd, adminProfileID) VALUES
-(1, 'admin', SHA2('admin', 256), 1), 
-(1, 'ntuan', SHA2('ntuan123@', 256), 2), 
-(2, 'nnghiem', SHA2('nnghiem123@', 256), 3), 
-(3, 'nhuan', SHA2('nhuan123@', 256), 4), 
-(4, 'ntoan', SHA2('ntoan123@', 256), 5); 
+INSERT INTO AdminAccount (adminProfileID, roleID, username, `password`) VALUES
+(1, 1, 'admin', SHA2('admin', 256)), 
+(2, 1, 'ntuan', SHA2('ntuan123@', 256)), 
+(3, 2, 'nnghiem', SHA2('nnghiem123@', 256)), 
+(4, 3, 'nhuan', SHA2('nhuan123@', 256)), 
+(5, 4, 'ntoan', SHA2('ntoan123@', 256)); 
+
+-- Thêm tài khoản cho khách vãng lai
+INSERT INTO EnduserAccount (prfName, gender, dob, phoneNumber, email, defaultAddress, `password`)
+VALUES
+('Guest', NULL, NULL, NULL, NULL, NULL, SHA2('guest', 256)); 
+
+-- Danh sách danh mục sách
+INSERT INTO BookCategory (categoryName) VALUES
+('Văn học'),
+('Tiểu thuyết'),
+('Truyện ngắn'),
+('Khoa học viễn tưởng'),
+('Huyền bí'),
+('Kinh dị'),
+('Trinh thám'),
+('Phiêu lưu'),
+('Lãng mạn'),
+('Tâm lý học'),
+('Tự truyện - Hồi ký'),
+('Kinh tế'),
+('Quản trị kinh doanh'),
+('Marketing'),
+('Tài chính - Đầu tư'),
+('Khởi nghiệp'),
+('Công nghệ thông tin'),
+('Lập trình'),
+('Trí tuệ nhân tạo'),
+('An ninh mạng'),
+('Dữ liệu lớn'),
+('Kỹ thuật - Công nghệ'),
+('Điện tử - Viễn thông'),
+('Khoa học vũ trụ'),
+('Y học'),
+('Dinh dưỡng - Sức khỏe'),
+('Tâm lý học ứng dụng'),
+('Phát triển bản thân'),
+('Giáo dục'),
+('Nuôi dạy con'),
+('Tâm linh - Tôn giáo'),
+('Triết học'),
+('Lịch sử'),
+('Địa lý'),
+('Chính trị'),
+('Xã hội học'),
+('Luật'),
+('Nghệ thuật'),
+('Âm nhạc'),
+('Hội họa'),
+('Nhiếp ảnh'),
+('Thiết kế đồ họa'),
+('Kiến trúc'),
+('Phong thủy'),
+('Thể thao'),
+('Nấu ăn'),
+('Làm vườn'),
+('Du lịch'),
+('Ngôn ngữ học'),
+('Sách thiếu nhi'),
+('Truyện tranh - Manga'),
+('Light Novel'),
+('Kỹ năng sống'),
+('Khoa học tự nhiên'),
+('Vật lý'),
+('Hóa học'),
+('Sinh học'),
+('Thiên văn học'),
+('Sách giáo khoa'),
+('Luyện thi đại học'),
+('Tiếng Anh'),
+('Ngoại ngữ khác'),
+('Thơ ca'),
+('Sách tham khảo'),
+('Sách cổ điển'),
+('Văn học nước ngoài'),
+('Tạp chí');

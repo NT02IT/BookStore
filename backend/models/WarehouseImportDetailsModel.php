@@ -1,74 +1,39 @@
 <?php
+
 class WarehouseImportDetailsModel {
-    private $warehouseImportDetailsID;
     private $warehouseImportID;
-    private $ISBN;
-    private $importPrice;
+    private $bookID;
     private $quantity;
+    private $importPrice;
 
-    public function __construct(
-        $warehouseImportDetailsID = null,
-        $warehouseImportID,
-        $ISBN,
-        $importPrice,
-        $quantity
-    ) {
-        $this->warehouseImportDetailsID = $warehouseImportDetailsID;
+    // Constructor
+    public function __construct($warehouseImportID = null, $bookID = null, $quantity = null, $importPrice = null) {
         $this->warehouseImportID = $warehouseImportID;
-        $this->ISBN = $ISBN;
-        $this->importPrice = $importPrice;
+        $this->bookID = $bookID;
         $this->quantity = $quantity;
-    }
-
-    // Getter methods
-    public function getWarehouseImportDetailsID() {
-        return $this->warehouseImportDetailsID;
-    }
-
-    public function getWarehouseImportID() {
-        return $this->warehouseImportID;
-    }
-
-    public function getISBN() {
-        return $this->ISBN;
-    }
-
-    public function getImportPrice() {
-        return $this->importPrice;
-    }
-
-    public function getQuantity() {
-        return $this->quantity;
-    }
-
-    // Setter methods
-    public function setWarehouseImportDetailsID($warehouseImportDetailsID) {
-        $this->warehouseImportDetailsID = $warehouseImportDetailsID;
-    }
-
-    public function setWarehouseImportID($warehouseImportID) {
-        $this->warehouseImportID = $warehouseImportID;
-    }
-
-    public function setISBN($ISBN) {
-        $this->ISBN = $ISBN;
-    }
-
-    public function setImportPrice($importPrice) {
         $this->importPrice = $importPrice;
     }
 
-    public function setQuantity($quantity) {
-        $this->quantity = $quantity;
-    }
+    // Getters and Setters
+    public function getWarehouseImportID() { return $this->warehouseImportID; }
+    public function setWarehouseImportID($warehouseImportID) { $this->warehouseImportID = $warehouseImportID; }
 
-    // toString method
+    public function getBookID() { return $this->bookID; }
+    public function setBookID($bookID) { $this->bookID = $bookID; }
+
+    public function getQuantity() { return $this->quantity; }
+    public function setQuantity($quantity) { $this->quantity = $quantity; }
+
+    public function getImportPrice() { return $this->importPrice; }
+    public function setImportPrice($importPrice) { $this->importPrice = $importPrice; }
+
+    // ToString method
     public function __toString() {
-        return "WarehouseImportDetails [warehouseImportDetailsID=" . $this->warehouseImportDetailsID .
-               ", warehouseImportID=" . $this->warehouseImportID .
-               ", ISBN=" . $this->ISBN .
-               ", importPrice=" . number_format($this->importPrice, 2) .
-               ", quantity=" . $this->quantity . "]";
+        return "WarehouseImportDetailsModel { " .
+            "warehouseImportID=" . $this->warehouseImportID . ", " .
+            "bookID=" . $this->bookID . ", " .
+            "quantity=" . $this->quantity . ", " .
+            "importPrice=" . $this->importPrice . " " .
+            "}";
     }
 }
-?>

@@ -1,0 +1,12 @@
+sp[tên entity]_Create
+sp[tên entity]_Delete
+sp[tên entity]_DeleteAll[FK]
+sp[tên entity]_SoftDelete
+sp[tên entity]_Restore
+sp[tên entity]_Update
+sp[tên entity]_GetAll
+sp[tên entity]_GetAllIncludeDeleted
+sp[tên entity]_GetAll[FK]
+sp[tên entity]_GetById
+sp[tên entity]_GetByName
+sp[tên entity]_Search
