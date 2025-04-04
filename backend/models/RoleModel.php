@@ -4,10 +4,14 @@ class RoleModel {
     private $roleName;
     private $deletedAt;
 
-    public function __construct($roleID = null, $roleName, $deletedAt = false) {
+    // Quan hệ nhiều-nhiều với PermissionModel
+    private $permissions = [];
+
+    public function __construct($roleID = null, $roleName, $deletedAt = false, $permissions = []) {
         $this->roleID = $roleID;
         $this->roleName = $roleName;
         $this->deletedAt = $deletedAt;
+        $this->permissions = $permissions;
     }
 
     // Getter methods
@@ -19,8 +23,12 @@ class RoleModel {
         return $this->roleName;
     }
 
-    public function getdeletedAt() {
+    public function getDeletedAt() {
         return $this->deletedAt;
+    }
+
+    public function getPermissions() {
+        return $this->permissions;
     }
 
     // Setter methods
@@ -32,16 +40,27 @@ class RoleModel {
         $this->roleName = $roleName;
     }
 
-    public function setdeletedAt($deletedAt) {
+    public function setDeletedAt($deletedAt) {
         $this->deletedAt = $deletedAt;
+    }
+
+    public function setPermissions($permissions) {
+        $this->permissions = $permissions;
+    }
+
+    // Add one permission
+    public function addPermission($permission) {
+        $this->permissions[] = $permission;
     }
 
     // toString method
     public function __toString() {
+        $permissionStr = implode(", ", $this->permissions);
         return "Role [roleID=" . $this->roleID . 
                 ", roleName=" . $this->roleName . 
-                "Deleted At: " . ($this->deletedAt ? $this->deletedAt->format('Y-m-d H:i:s') : 'null') .
-                " }";
+                ", deletedAt=" . ($this->deletedAt ? $this->deletedAt->format('Y-m-d H:i:s') : 'null') . 
+                ", permissions=[" . $permissionStr . "]" . 
+                " ]";
     }
 }
 ?>
