@@ -1,2 +1,3 @@
 # /backend/.env
 # /frontend/.env
+/database/run.sql

@@ -69,8 +69,6 @@ BEGIN
     SELECT * FROM Supplier;
 END //
 
-DELIMITER //
-
 CREATE PROCEDURE spSupplier_GetAllBook (
     IN p_supplierID INT
 )
@@ -80,8 +78,6 @@ BEGIN
     JOIN BookInfo b ON sb.bookID = b.bookID
     WHERE sb.supplierID = p_supplierID;
 END //
-
-DELIMITER ;
 
 -- Lấy nhà cung cấp theo ID
 CREATE PROCEDURE spSupplier_GetById (
